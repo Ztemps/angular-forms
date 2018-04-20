@@ -1,0 +1,61 @@
+<h4>Formularios <small>data</small></h4>
+<hr>
+<form [formGroup]="form" (ngSubmit)="saveChanges()">
+    <!-- [ngClass]="{ 'has-danger': !form.controls.name.valid}" -->
+  <div formGroupName="fullname">
+    <div class="form-group row" [ngClass]="{ 'has-danger': !form.controls['fullname'].controls['name'].valid && form.controls['fullname'].controls['name'].dirty }">
+      <label class="col-2 col-form-label">Name</label>
+      <div class="col-8">
+        <input class="form-control"
+               type="text"
+               placeholder="name"
+               formControlName="name">
+
+       <div *ngIf="form.controls['fullname'].controls['name'].errors?.required && form.controls['fullname'].controls['name'].dirty"
+              class="form-control-feedback">
+              Required field
+        </div>
+        <div *ngIf="form.controls['fullname'].controls['name'].errors?.minlength"
+              class="form-control-feedback">
+              This field require at least x chars
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">lastname</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               placeholder="lastname"
+               formControlName="lastname">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">mail</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="email"
+             placeholder="mail"
+             formControlName="mail">
+    </div>
+  </div>
+
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+  {{ form.valid | json}}
+</form>

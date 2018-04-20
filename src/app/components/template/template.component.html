@@ -1,0 +1,131 @@
+<h4>Formularios <small>template</small></h4>
+<hr>
+<form
+  (ngSubmit)="saveForm(form)" #form="ngForm" novalidate="">
+
+  <div>
+
+    <div class="form-group row"
+    [ngClass]="{ 'has-danger': ( name?.errors?.required && form?.value.name != null ) || name?.errors?.minlength }">
+      <label class="col-2 col-form-label">Name</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               placeholder="Insert Name..."
+               name="name"
+               [(ngModel)]="user['name']"
+               minlength="5"
+               required
+               #name="ngModel">
+
+               <div *ngIf="name?.errors?.required && form?.value.name != null"
+                    class="form-control-feedback">Required field</div>
+               <div *ngIf="name?.errors?.minlength"
+                    class="form-control-feedback">This field require at least {{ form?.value.name.length }}/{{ name?.errors?.minlength.requiredLength }} characters</div>
+
+      </div>
+    </div>
+
+    <div class="form-group row"
+    [ngClass]=" { 'has-danger': (lastname?.errors?.required && form?.value.lastname != null) || lastname?.errors?.minlength }">
+      <label class="col-2 col-form-label">Lastname</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               placeholder="Insert Lastname..."
+               name="lastname"
+               [(ngModel)]="user['lastname']"
+               minlength="10"
+               required
+               #lastname="ngModel">
+
+               <div *ngIf="lastname?.errors?.required && form?.value.lastname != null"
+               class="form-control-feedback">Required field</div>
+               <div *ngIf="lastname?.errors?.minlength"
+               class="form-control-feedback">This field require at least {{ form?.value.lastname.length }}/{{ lastname?.errors?.minlength.requiredLength }} characters</div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Mail</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+             type="email"
+             placeholder="Insert Mail..."
+             name="mail"
+             [(ngModel)]="user['email']"
+             minlength="10"
+             required
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+             #mail="ngModel">
+
+             <div *ngIf="mail?.errors?.required && form?.value.mail != null">Required field</div>
+             <div *ngIf="mail?.errors?.pattern">Invalid email format</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Country</label>
+    <div class="col-md-8">
+      <select [(ngModel)]="user['country']" class="form-control" name="country">
+        <option value="">Choose your country</option>
+        <option *ngFor="let country of countryList;"
+                [value]="country.code">
+                {{ country.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+      <label class="col-2 col-form-label">Genre</label>
+      <div class="col-md-8">
+        <label *ngFor="let g of genreList"
+        class="custom-control custom-radio">
+              <input
+              [(ngModel)]="user['genre']"
+              name="genre"
+              [value]="g"
+              type="radio"
+              class="custom-control-input"
+              required>
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">{{ g }}</span>
+        </label>
+      </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Terms</label>
+        <div class="col-md-8">
+          <label class="custom-control custom-checkbox">
+                <input
+                [(ngModel)]="user['terms']"
+                name="terms"
+                type="checkbox"
+                required
+                class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Accept Terms and Conditions</span>
+          </label>
+        </div>
+      </div>
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button
+      [disabled]="!form.valid"
+      type="submit" class="btn btn-outline-primary">
+          Save
+        </button>
+    </div>
+  </div>
+</form>
+<pre>
+  {{ user | json}}
+</pre>
